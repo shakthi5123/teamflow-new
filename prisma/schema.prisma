@@ -1,0 +1,57 @@
+
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+}
+
+model User {
+  id  String  @id   @default(auto())  @map("_id") @db.ObjectId
+  name  String
+  email  String  @unique
+  image  String?
+  role   String   @default("user")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Board {
+  id  String  @id   @default(auto())  @map("_id") @db.ObjectId
+  title  String
+  description  String?
+  ownerId   String  @db.ObjectId
+  members   String[]  @db.ObjectId
+  createdAt DateTime @default(now())
+}
+
+model List {
+  id  String  @id   @default(auto())  @map("_id") @db.ObjectId
+  title String
+  boardId  String @db.ObjectId
+  position Int
+  createdAt DateTime @default(now())
+}
+
+model Task {
+  id  String  @id   @default(auto())  @map("_id") @db.ObjectId
+  title  String
+  description  String?
+  listId  String  @db.ObjectId
+  assignees  String[]  @db.ObjectId
+  labels  String[]
+  position  Int
+  dueDate   DateTime?
+  completed  Boolean  @default(false)
+  createdAt  DateTime  @default(now())
+}
+
+model Comment {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  taskId    String @db.ObjectId
+  authorId  String @db.ObjectId
+  content   String
+  createdAt DateTime @default(now())
+}
