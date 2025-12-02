@@ -7,14 +7,14 @@ import { describe } from "node:test";
 export async function GET() {
  try {
   const board = await prisma.board.findMany();
-  return NextResponse.json({ boards })
+  return NextResponse.json({ board })
  } catch (error) {
   console.error(error)
   return NextResponse.json({ error: "Failed to fetch boards"}, { status: 500 })
  }
 }
 
-export async function POST() {
+export async function POST(request: Request) {
  try {
   const data = await request.json();
   const board = await prisma.board.create({
