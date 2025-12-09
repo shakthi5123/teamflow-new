@@ -24,7 +24,7 @@ export default function SignupPage() {
     }
 
     setLoading(true)
-
+    // this will call or send the data to signup API route we created earlier
     const res = await fetch('/api/signup', {
       method: 'POST',
       body: JSON.stringify(form),
@@ -35,6 +35,7 @@ export default function SignupPage() {
 
     setLoading(false)
 
+    // If signup is successful
     if (res.ok) {
       toast.success('Account created successfully!')
       router.push('/login')
