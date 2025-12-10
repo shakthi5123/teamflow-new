@@ -1,38 +1,26 @@
-// import { getServerSession } from 'next-auth'
-
-// export default async function DashboardPage() {
-//   const session = await getServerSession()
-
-//   if (!session) {
-//     return (
-//       <div className="p-8 text-center">
-//         <h1 className="text-xl">You must be logged in</h1>
-//         <a href="/login" className="text-blue-600 underline">
-//           Go to login
-//         </a>
-//       </div>
-//     )
-//   }
-
-//   return (
-//     <main
-//       className="p-6 overflow-y-auto flex-1 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-//       <h1 className="text-2xl font-semibold">
-//         Welcome, {session.user?.name || 'User'}
-//       </h1>
-//       <p className="mt-2 text-sm text-slate-600">Dashboard is ready.</p>
-//     </main>
-//   )
-// }
-
-
 "use client";
 
 export default function DashboardPage() {
+  const cards = [
+    { title: "Total Boards", value: 4 },
+    { title: "Task Completed", value: 28 },
+    { title: "Team Members", value: 6 },
+    { title: "Active Overview", value: "View" },
+    
+  ];
+
   return (
-    <main className="p-6 flex-1 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors">
-      <h1 className="text-2xl font-semibold">Welcome</h1>
-      <p className="mt-2 text-sm">Dashboard is ready.</p>
+    <main className="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {cards.map((card, i) => (
+        <div key={i} className="p-5 rounded-lg shadow-md bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+          <h2 className="text-gray-600 dark:text-gray-300 text-sm font-medium">
+            {card.title}
+          </h2>
+          <p className="text-3xl font-bold mt-2 text-gray-900 dark:text-gray-100">
+            {card.value}
+          </p>
+        </div>
+      ))}
     </main>
-  );
+  )
 }

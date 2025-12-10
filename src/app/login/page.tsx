@@ -37,17 +37,17 @@ export default function LoginPage() {
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100 px-4">
       <div className="max-w-md w-full bg-white p-8 rounded-xl shadow-lg">
-        <h1 className="text-3xl font-bold text-center mb-6">Welcome Back</h1>
+        <h1 className="text-3xl font-bold text-center mb-6  dark:text-gray-900">Welcome Back</h1>
 
         <input
-          className="border p-3 w-full rounded mt-2"
+          className="border dark:text-gray-900 p-3 w-full rounded mt-2"
           placeholder="Email"
           type='email'
           onChange={(e) => setData({ ...data, email: e.target.value })}
         />
 
         <input
-          className="border p-3 w-full rounded mt-2"
+          className="border dark:text-gray-900 p-3 w-full rounded mt-2"
           placeholder="Password"
           type='password'
           onChange={(e) => setData({ ...data, password: e.target.value })}
