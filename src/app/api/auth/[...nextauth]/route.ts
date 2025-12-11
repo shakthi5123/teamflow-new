@@ -14,14 +14,14 @@ const handler = NextAuth({
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-      profile(profile) {
-        return {
-          id: profile.sub,
-          name: profile.name,
-          email: profile.email,
-          image: profile.picture,
-        }
-      }
+      // profile(profile) {
+      //   return {
+      //     id: profile.sub,
+      //     name: profile.name,
+      //     email: profile.email,
+      //     image: profile.picture,
+      //   }
+      // }
     }),
 
     CredentialsProvider({
@@ -53,19 +53,28 @@ const handler = NextAuth({
     }),
   ],
 
- callbacks: {
-  async jwt({ token, user }) {
-    if (user?.id) token.id = user.id;     // Credentials
-    if (user?.sub) token.id = user.sub;   // Google
-    return token;
-  },
+  callbacks: {
+    async jwt({ token, user }) {
+      // First time login
+      if (user) {
+        const dbUser = await prisma.user.findUnique({
+          where: { email: user.email },
+          select: { id: true },
+        })
 
-  async session({ session, token }) {
-    session.user = session.user || {};    //  REQUIRED FIX
-    session.user.id = token.id;           // attach id manually
-    return session;
+        token.id = dbUser?.id
+      }
+
+      return token
+    },
+
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.id = token.id
+      }
+      return session
+    },
   },
-},
 
   pages: {
     signIn: '/login',
